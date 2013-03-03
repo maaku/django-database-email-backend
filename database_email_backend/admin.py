@@ -64,8 +64,12 @@ class EmailAdmin(admin.ModelAdmin):
 
     def get_urls(self):
         urlpatterns = super(EmailAdmin, self).get_urls()
-        from django.conf.urls.defaults import patterns, url
-
+        try:
+            from django.conf.urls import patterns, url
+        except ImportError:
+            # for Django version less then 1.4
+            from django.conf.urls.defaults import patterns, url
+            
         def wrap(view):
             def wrapper(*args, **kwargs):
                 return self.admin_site.admin_view(view)(*args, **kwargs)
