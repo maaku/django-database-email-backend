@@ -6,7 +6,11 @@ from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.mail import message
 from django.db.models import Count
-from django.utils.functional import update_wrapper
+try:
+    from django.utils.functional import update_wrapper
+except ImportError:
+    # Depreciated and removed in Django 1.6
+    from functools import update_wrapper
 from django.utils.translation import ugettext as _
 from django.template.defaultfilters import linebreaks_filter
 
