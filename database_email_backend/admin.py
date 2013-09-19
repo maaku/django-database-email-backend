@@ -29,6 +29,8 @@ class AttachmentInlineAdmin(admin.TabularInline):
     fields = ('file_link', 'mimetype',)
 
     def file_link(self, obj):
+        if obj.pk is None:
+            return u""
         url_name = '%s:%s_email_attachment' % (self.admin_site.name, self.model._meta.app_label,)
         kwargs={
             'email_id': str(obj.email_id),
